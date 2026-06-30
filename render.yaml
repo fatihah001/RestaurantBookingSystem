@@ -1,0 +1,29 @@
+﻿services:
+  - type: web
+    name: savora
+    runtime: docker
+    plan: free
+    envVars:
+      - key: DB_URL
+        value: jdbc:mysql://${DB_HOST}:3306/${DB_NAME}?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      - key: DB_USER
+        fromDatabase:
+          name: savora-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: savora-db
+          property: password
+      - key: DB_HOST
+        fromDatabase:
+          name: savora-db
+          property: host
+      - key: DB_NAME
+        fromDatabase:
+          name: savora-db
+          property: database
+
+databases:
+  - name: savora-db
+    plan: free
+    databaseName: restaurant_booking_system
